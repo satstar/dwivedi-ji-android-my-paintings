@@ -10,9 +10,11 @@ import com.dwivedi.artgallery.Task.ServiceDataClass.ItemTagClass;
 import com.dwivedi.artgallery.Task.ServiceDataClass.MainTagClass;
 import com.dwivedi.artgallery.Util.MyHorizontalScrollView;
 import com.dwivedi.artgallery.Util.MyHorizontalScrollView.SizeCallback;
+import com.dwivedi.artgallery.ViewPantings.ViewGalleryPager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,9 +37,9 @@ public class HomePageActivity extends Activity {
 	private ListView listViewCat;
 	private ImageView btnSlide;
 	private GridView gridViewpainting;
-	private ArrayList<ItemTagClass> itemTagClassesForGrid;
+	public static ArrayList<ItemTagClass> itemTagClassesForGrid;
 	private TextView title;
-
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -70,6 +72,22 @@ public class HomePageActivity extends Activity {
 		GridImagesAdapter adapter = new GridImagesAdapter(this,
 				itemTagClassesForGrid);
 		gridViewpainting.setAdapter(adapter);
+		
+		
+		gridViewpainting.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position,
+					long id) {
+				Intent intent = new Intent(view.getContext(),ViewGalleryPager.class);
+				// TODO Auto-generated method stub
+   				intent.putExtra("POSITION", position);
+				startActivity(intent );
+				
+				
+			}
+		});
 
 		updateAdapter(getAllImagesURLs());
 

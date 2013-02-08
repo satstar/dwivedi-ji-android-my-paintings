@@ -31,9 +31,11 @@ public class ImageLoader {
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	ExecutorService executorService;
+	private Context mContext;
 
 	public ImageLoader(Context context) {
 		fileCache = new FileCache(context);
+		this.mContext = context;
 		executorService = Executors.newFixedThreadPool(5);
 	}
 
@@ -49,6 +51,18 @@ public class ImageLoader {
 			imageView.setImageResource(stub_id);
 		}
 	}
+	
+
+	public Bitmap getDisplayImageBitmap(String url) {
+ 		Bitmap bitmap = memoryCache.get(url);
+		if (bitmap != null)
+			return bitmap;
+ 		else {
+ 			Bitmap largeIcon = BitmapFactory.decodeResource(mContext.getResources(), stub_id);
+ 			 return largeIcon;
+ 		}
+	}
+	
 
 	private void queuePhoto(String url, ImageView imageView) {
 		PhotoToLoad p = new PhotoToLoad(url, imageView);
