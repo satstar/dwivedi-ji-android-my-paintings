@@ -42,7 +42,7 @@ public class GridImagesAdapter extends BaseAdapter {
 
 	public Object getItem(int index) {
 
-		return itemTagClasses.get(index);
+		return itemTagClasses;
 	}
 
 	public long getItemId(int index) {
